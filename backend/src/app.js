@@ -21,24 +21,12 @@ app.use(cors({
 // 2. Body Parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
-
-// 3. Cookie Parser
 app.use(cookieParser());
 
-// --- 2. Mount API Routes ---
 
-// All Auth routes (Login, Signup)
 app.use('/api/v1/auth', authRoutes);
-
-// All Trip routes (Create Trip, My Trips, Public Trips)
 app.use('/api/v1/trips', tripRoutes);
-
-// All Stop & Activity routes (Itinerary Builder)
 app.use('/api/v1/stops', stopRoutes);
-
-// All Budget routes (Breakdown, Stop Costs, Limits)
 app.use('/api/v1/budget', budgetRoutes);
 
-
-// Export the app instance
 export default app;

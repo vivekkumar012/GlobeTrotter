@@ -5,19 +5,42 @@ import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
 import { Card } from "../../components/ui/Card";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate login
-    setTimeout(() => {
-      setIsLoading(false);
-      navigate("/dashboard");
-    }, 1500);
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/v1/auth/login",
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Sigin Successfull", response.data);
+      alert("Login Successfully");
+      // Simulate login
+      setTimeout(() => {
+        setIsLoading(false);
+        navigate("/dashboard");
+      }, 1500);
+    } catch (error) {
+      console.log("Error in Login", error);
+    }
   };
 
   return (
@@ -73,6 +96,8 @@ export const Login: React.FC = () => {
                 type="email"
                 placeholder="you@example.com"
                 icon={<Mail className="w-5 h-5" />}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
 
@@ -82,6 +107,8 @@ export const Login: React.FC = () => {
                   type="password"
                   placeholder="••••••••"
                   icon={<Lock className="w-5 h-5" />}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
                 <div className="flex justify-end">
