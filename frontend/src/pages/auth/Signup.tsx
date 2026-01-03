@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import type { ButtonHTMLAttributes, InputHTMLAttributes, ChangeEvent } from "react";
 import {
   Mail,
-  Lock,
   ArrowRight,
   Map,
   User,
@@ -10,7 +10,13 @@ import {
   Globe,
 } from "lucide-react";
 
-const Button = ({
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "ghost";
+  size?: "md" | "lg";
+  isLoading?: boolean;
+}
+
+const Button: React.FC<ButtonProps> = ({
   children,
   className = "",
   variant = "primary",
@@ -47,7 +53,12 @@ const Button = ({
   );
 };
 
-const Input = ({ label, icon, className = "", ...props }) => {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  icon?: React.ReactNode;
+}
+
+const Input: React.FC<InputProps> = ({ label, icon, className = "", ...props }) => {
   return (
     <div className="space-y-2">
       {label && (
@@ -62,9 +73,8 @@ const Input = ({ label, icon, className = "", ...props }) => {
           </div>
         )}
         <input
-          className={`w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 ${
-            icon ? "pl-11" : ""
-          } text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 transition-all ${className}`}
+          className={`w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 ${icon ? "pl-11" : ""
+            } text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 transition-all ${className}`}
           {...props}
         />
       </div>
@@ -72,7 +82,12 @@ const Input = ({ label, icon, className = "", ...props }) => {
   );
 };
 
-const Card = ({ children, className = "" }) => {
+interface CardProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const Card: React.FC<CardProps> = ({ children, className = "" }) => {
   return (
     <div className={`rounded-2xl p-8 shadow-2xl ${className}`}>{children}</div>
   );
@@ -80,7 +95,7 @@ const Card = ({ children, className = "" }) => {
 
 export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const [photo, setPhoto] = useState(null);
+  const [photo, setPhoto] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -91,16 +106,16 @@ export default function SignupPage() {
     additionalInfo: "",
   });
 
-  const handlePhotoUpload = (e) => {
-    const file = e.target.files[0];
+  const handlePhotoUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => setPhoto(e.target.result);
+      reader.onload = (e) => setPhoto(e.target?.result as string);
       reader.readAsDataURL(file);
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };

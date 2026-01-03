@@ -104,18 +104,21 @@ export const Profile: React.FC = () => {
                 <Input
                   label="First Name"
                   value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   icon={<User className="w-5 h-5" />}
                   disabled={!isEditing}
                 />
                 <Input
                   label="Last Name"
                   value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   icon={<User className="w-5 h-5" />}
                   disabled={!isEditing}
                 />
                 <Input
                   label="Email Address"
                   value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   icon={<Mail className="w-5 h-5" />}
                   disabled={!isEditing}
@@ -123,6 +126,7 @@ export const Profile: React.FC = () => {
                 <Input
                   label="Phone Number"
                   value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                   type="tel"
                   icon={<Phone className="w-5 h-5" />}
                   disabled={!isEditing}
@@ -130,6 +134,7 @@ export const Profile: React.FC = () => {
                 <Input
                   label="City"
                   value={city}
+                  onChange={(e) => setCity(e.target.value)}
                   icon={<MapPin className="w-5 h-5" />}
                   disabled={!isEditing}
                 />

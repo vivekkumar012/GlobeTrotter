@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
+import { AdminLayout } from './components/layout/AdminLayout';
 import { Login } from './pages/auth/Login';
 import { Dashboard } from './pages/dashboard/Dashboard';
 import { CreateTrip } from './pages/trips/CreateTrip';
@@ -17,11 +18,25 @@ import { Profile } from './pages/profile/Profile';
 import SignupPage from './pages/auth/Signup';
 import { ForgotPassword } from './pages/auth/ForgetPassord';
 
+// Admin Pages
+import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { UserManagement } from './pages/admin/UserManagement';
+import { TripAnalytics } from './pages/admin/TripAnalytics';
+
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
+      <Routes>
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="users" element={<UserManagement />} />
+          <Route path="analytics" element={<TripAnalytics />} />
+        </Route>
+
+        {/* Main App Routes */}
+        <Route element={<Layout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignupPage />} /> {/* Using Login for signup for now */}
           <Route path='/forget-password' element={<ForgotPassword />} />
@@ -36,8 +51,8 @@ function App() {
           <Route path="/trips" element={<MyTrips />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<Navigate to="/login" replace />} />
-        </Routes>
-      </Layout>
+        </Route>
+      </Routes>
     </Router>
   );
 }

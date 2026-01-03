@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navbar } from './Navbar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Outlet } from 'react-router-dom';
 
 interface LayoutProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
@@ -14,7 +14,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="min-h-screen bg-[var(--bg-dark)] text-[var(--text-main)]">
             {!isAuthPage && <Navbar />}
             <main className={`${!isAuthPage ? 'pt-16' : ''}`}>
-                {children}
+                {children || <Outlet />}
             </main>
         </div>
     );

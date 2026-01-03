@@ -10,6 +10,7 @@ export const Navbar: React.FC = () => {
     { path: "/dashboard", label: "Explore", icon: Compass },
     { path: "/trips", label: "My Trips", icon: Map },
     { path: "/planner", label: "Planner", icon: Calendar },
+    { path: "/admin", label: "Admin", icon: User },
   ];
 
   return (
@@ -34,11 +35,10 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-2 text-sm font-medium transition-colors ${
-                    isActive
-                      ? "text-[var(--primary)]"
-                      : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
-                  }`}
+                  className={`flex items-center gap-2 text-sm font-medium transition-colors ${isActive
+                    ? "text-[var(--primary)]"
+                    : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                    }`}
                 >
                   <Icon className="w-4 h-4" />
                   {item.label}
